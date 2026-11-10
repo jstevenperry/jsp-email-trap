@@ -1,7 +1,7 @@
 # Acceptance Criteria and Traceability
-Version: 0.2 (review draft) | Authority: behavioral verification scenarios, **not** requirement definitions
+Version: 0.3 (review draft) | Authority: behavioral verification scenarios, **not** requirement definitions
 
-The source of each requirement is `01`, `02`, or `03`. This document references IDs without restating normative requirements. Scenarios below are illustrative baseline cases; before the v1.0 gate, generate complete automated coverage for every functional requirement, including negative paths and unresolved decisions.
+The source of each requirement is `01`, `02`, or `03`. This document references IDs without restating normative requirements. Scenarios below are a review-draft baseline; before the v1.0 gate, complete automated coverage for every functional requirement, including negative and boundary paths.
 
 ## Sprint 1 scenarios
 | Scenario | Requirement IDs | Given / When / Then |
@@ -42,10 +42,35 @@ The source of each requirement is `01`, `02`, or `03`. This document references 
 | S2-010 | ORG-003, ORG-008 | Given Alice is authorized only as Bob's manager; when Alice attempts to hide Bob's message; then the mutation is denied and Bob's visibility is unchanged. |
 | S2-011 | ORG-002 | Given self-management or a cycle in the relationship seed; when configuration is validated; then it is rejected. |
 
+## v0.3 additional acceptance scenarios
+| Scenario | Requirement IDs | Given / When / Then |
+|---|---|---|
+| S1-017 | AUTH-003, AUTH-004, UI-001 | Given Alice and Bob concurrently share `shared@test.local`; when a message arrives for that address; then both can see it independently. |
+| S1-018 | UI-006, AUTH-004 | Given Alice hides a shared message, loses the address assignment, and later regains it; when she views her inbox; then that message remains hidden for Alice while Bob's view is unchanged. |
+| S1-019 | UI-004, UI-005, DATA-002 | Given a message has two attachments; when an authorized user opens its detail; then each attachment has a visible Download action and the raw MIME has its own visible Download action; downloaded bytes match originals. |
+| S1-020 | AUTH-005, UI-005 | Given an unauthorized user knows a valid attachment or MIME URL; when they request it directly; then content is denied. |
+| S2-012 | ORG-011, UI-006 | Given Alice is both a direct envelope recipient and Bob's manager for one message; when Alice hides it; then only Alice's inbox hides it, while Bob's inbox remains unchanged. |
+| S2-013 | DLQ-001, DLQ-002, DLQ-003 | Given an unknown address receives mail; when a configured admin opens dead-letter; then the message and unassigned recipient are listed and the admin can inspect its detail and original bytes. |
+| S2-014 | DLQ-003 | Given a regular user or non-admin manager knows a dead-letter message ID; when they request admin list, detail, attachment, or MIME endpoints; then every request is denied. |
+| S2-015 | DLQ-004, AUTH-004 | Given an unassigned address has historical mail in dead-letter; when the address is assigned to Alice; then the address no longer qualifies as dead-letter and Alice can view the historical message without retransmission. |
+| S2-016 | DLQ-005, DATA-003 | Given one message has assigned recipient Alice and unassigned recipient Nobody; when it is accepted; then Alice can view it, the admin sees Nobody in dead-letter, and only one underlying message record exists. |
+| S2-017 | DLQ-005, DLQ-004 | Given a message has two unassigned recipients; when only one is assigned; then dead-letter retains only the other unassigned recipient and the new assignee sees the message. |
+| S2-018 | DLQ-006, SYS-001 | Given an admin opens dead-letter; when inspecting available actions; then no address assignment, forwarding, redelivery, or external-delivery action is available. |
+| S2-019 | DLQ-003 | Given a principal authenticates successfully but is not configured as an admin; when they forge an admin role or client-provided identity; then administrative access remains denied. |
+
+## Additional traceability scenarios for previously uncovered IDs
+| Scenario | Requirement IDs | Given / When / Then |
+|---|---|---|
+| S1-021 | SMTP-001, DEP-003 | Given a configured non-default SMTP port; when a client connects on that port; then the server accepts a valid SMTP transaction without source edits. |
+| S1-022 | DATA-004, UI-002 | Given a captured message; when an authorized user opens the inbox; then sender, envelope recipients, subject, and UTC receipt timestamp are displayed accurately. |
+| S1-023 | DEP-001, SYS-007 | Given a clean host with compatible container tooling; when the reference Compose setup starts; then the application and development Keycloak provider are available without Docker Desktop. |
+| S1-024 | DEP-003 | Given external OIDC client settings and application secrets; when configuration is changed and the application restarted; then it uses the new settings without modifying source code. |
+| S1-025 | SYS-010 | Given the Sprint 1 test report; when it is reviewed; then each applicable functional requirement has traceable acceptance evidence and access-control denials have negative cases. |
+
 ## Coverage completion checklist
 - Expand positive, boundary, and negative cases for **every** requirement ID in `01`–`03`.
 - Include SMTP protocol behavior, concurrency, persistence, OIDC state/nonce/PKCE, access by direct ID, and shared-recipient deletion semantics.
-- D-01–D-08 are approved; expand all applicable tests before freezing the Sprint 1/Sprint 2 baselines.
+- D-01–D-08 and the v0.3 shared-address, persistent-hide, overlapping-entitlement, and dead-letter decisions are approved; expand all applicable tests before freezing the Sprint 1/Sprint 2 baselines.
 - Keep an independently owned black-box suite outside the agent's write permissions; record code-generated test coverage separately.
 
 ## Traceability convention

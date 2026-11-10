@@ -1,5 +1,5 @@
 # Architecture and Operational Constraints
-Version: 0.2 (review draft) | Authority: technical constraints, not business rules
+Version: 0.3 (review draft) | Authority: technical constraints, not business rules
 
 These are technical boundaries for generated implementation. Business behavior is defined only in `01`–`03`.
 
@@ -8,8 +8,8 @@ These are technical boundaries for generated implementation. Business behavior i
 | ARC-001 | Reference stack: Python 3, FastAPI, `aiosmtpd`, SQLite, and a lightweight HTML/JavaScript frontend. No framework substitution without approval. |
 | ARC-002 | Use standard OIDC Authorization Code Flow with PKCE, validate issuer/audience/signatures and login state/nonce as appropriate, and use secure HTTP-only session cookies. |
 | ARC-003 | Reference identity provider is Keycloak in Compose; issuer, client configuration, and secrets must be externally configurable. |
-| ARC-004 | All authorization checks occur in backend services for list, detail, MIME, attachment, and deletion operations; no trust in client-provided identity or recipient claims. |
-| ARC-005 | Store raw MIME plus normalized envelope-recipient associations; support independent per-principal view state without duplicating the raw message. |
+| ARC-004 | All authorization checks occur in backend services for list, detail, MIME, attachment, hide, and administrative dead-letter operations; no trust in client-provided identity or recipient claims. |
+| ARC-005 | Store raw MIME plus normalized envelope-recipient associations; support independent durable per-principal view state without duplicating the raw message; dead-letter is a query over current recipient assignments, not a second message store. |
 | ARC-006 | Render HTML email only in a constrained sandbox/sanitized context with active content disabled and remote loads blocked by default. |
 | ARC-007 | Use OCI-compatible images, Compose for local/reference deployment, and persistent volumes. No Docker Desktop requirement; Podman compatibility is a validation target, not assumed. |
 | ARC-008 | Prefer non-root runtime, minimal image, secrets outside source, least-privilege storage, and private/trusted network bindings by default. |
@@ -26,5 +26,5 @@ These are technical boundaries for generated implementation. Business behavior i
 ## Engineering boundaries
 Use standard SMTP/MIME libraries rather than writing protocol parsers from scratch. Handle malformed MIME defensively; do not execute attachments. Use migrations or explicit schema versioning between sprints. Prefer deterministic test fixtures and disposable test databases. Preserve original SMTP envelope recipient metadata even when MIME headers differ.
 
-## Unresolved implementation detail
+## Technical details to finalize before v1.0
 Before freezing v1.0, define supported SMTP extensions, SMTP error codes, session limits, OIDC session lifetime/logout behavior, backup/retention, address normalization, and network exposure policy. These details may require additional requirements if they affect user-visible behavior.

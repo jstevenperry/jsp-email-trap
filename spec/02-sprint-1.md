@@ -1,5 +1,5 @@
 # Sprint 1 — Functional Requirements
-Version: 0.2 (review draft) | Authority: Sprint 1 requirements only
+Version: 0.3 (review draft) | Authority: Sprint 1 requirements only
 
 ## Outcome
 A working multi-user email trap with SMTP capture, OIDC login, private browser inboxes, and portable Compose deployment. Shared requirements in `01-system-requirements.md` also apply.
@@ -27,7 +27,7 @@ A working multi-user email trap with SMTP capture, OIDC login, private browser i
 |---|---|
 | AUTH-001 | Support OIDC Authorization Code Flow with PKCE for interactive browser login. |
 | AUTH-002 | Identify the principal by the combination of trusted OIDC issuer (`iss`) and subject (`sub`), not by email claim alone. |
-| AUTH-003 | Associate each principal with one or more explicitly assigned trap addresses through administrator-controlled seed/configuration data; no self-service assignment (D-01). |
+| AUTH-003 | Associate each principal with one or more explicitly assigned trap addresses through administrator-controlled seed/configuration data; the same address may be assigned to multiple principals; no self-service assignment (D-01). |
 | AUTH-004 | Permit access to a message when at least one of its envelope recipient addresses is currently assigned to the principal, including messages captured before assignment; subject to per-user hidden status (D-08). |
 | AUTH-005 | Deny unauthorized access to inbox listings, message detail, attachments, and raw MIME downloads, including direct-ID requests. |
 | AUTH-006 | Deny protected API access without a valid authenticated session and reject invalid/expired/untrusted tokens. |
@@ -39,8 +39,8 @@ A working multi-user email trap with SMTP capture, OIDC login, private browser i
 | UI-002 | Display sender, envelope recipient(s), subject, and UTC receipt timestamp for messages visible to the user. |
 | UI-003 | Display plain-text and safely sandboxed/sanitized HTML bodies without executing scripts or fetching remote resources by default. |
 | UI-004 | Display message headers and attachment names, media types, and sizes. |
-| UI-005 | Allow authorized users to download attachments and raw MIME content. |
-| UI-006 | Allow a user to hide a message in their own inbox view without removing access for other entitled users; hidden state is per principal, not per address (D-03). |
+| UI-005 | Present a visible Download action for each listed attachment and a visible raw-MIME download action in the message-detail interface; downloads shall preserve original bytes for authorized users. |
+| UI-006 | Allow a user to hide a message in their own inbox view without removing access for other entitled users; hidden state is per principal, not per address, and persists across removal and later restoration of address assignments (D-03). |
 
 ### Deployment
 | ID | Requirement |
@@ -58,7 +58,10 @@ A working multi-user email trap with SMTP capture, OIDC login, private browser i
 - **D-05:** SMTP binds to a trusted/private network only. No SMTP authentication or TLS is required for Sprint 1; do not expose it to the public internet.
 - **D-08:** Entitlement uses **current** address assignment. Assigning an address grants visibility to previously captured messages for that address; removing it revokes visibility, including historical messages. Reassignment grants the new assignee historical access.
 
-## Still to clarify before v1.0
-- Whether address assignments are exclusive to one principal or may be shared.
-- Whether a previously hidden message remains hidden if an address is removed and later reassigned to the same principal (recommended: yes).
-- Define exact SMTP limits/error behavior and OIDC session/remote HTTPS operational defaults in `05` and tests in `04`.
+## Additional approved clarifications
+- **Shared addresses:** Multiple principals may hold the same address concurrently; their access and hidden states are independent.
+- **Persistent hide:** An existing per-principal hide remains effective if that principal loses and later regains an address entitlement.
+- **Downloads:** Attachment and raw-MIME downloads are Sprint 1 capabilities, not Sprint 3 enhancements. Inline previews remain a possible Sprint 3 feature.
+
+## Before v1.0
+Complete coverage and finalize SMTP limits/error behavior and OIDC session/remote HTTPS operational defaults in `05` and `04`.

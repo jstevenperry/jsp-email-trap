@@ -1,11 +1,11 @@
 # Hanzo POC Evaluation Protocol
-Version: 0.2 (review draft) | Authority: experiment procedure and evidence
+Version: 0.3 (review draft) | Authority: experiment procedure and evidence
 
 ## Purpose
 Measure whether Hanzo can generate and incrementally maintain the application from platform-neutral specifications. Do not confuse passing AI-authored tests with independent proof of correctness.
 
 ## Pre-run preparation
-1. Freeze and Git-tag the requirements package for Sprint 1; resolve D-01–D-05.
+1. Freeze and Git-tag the requirements package for Sprint 1; confirm approved D-01–D-05 and Sprint 1 shared-address/hidden-state rules.
 2. Prepare a separate black-box acceptance harness, fixtures, and security checks; restrict Hanzo from editing it.
 3. Record Hanzo beta version, models, configuration, token/cost reporting availability, host/container environment, and time budget.
 4. Create a clean repository and preserve all prompts and generated changes.
@@ -19,7 +19,7 @@ Measure whether Hanzo can generate and incrementally maintain the application fr
 6. Record outcomes and tag the Sprint 1 baseline.
 
 ## Sprint 2 protocol
-1. Freeze Sprint 1 baseline; resolve D-06–D-08 and tag Sprint 2 spec changes.
+1. Freeze Sprint 1 baseline; confirm approved D-06–D-08 and Sprint 2 dead-letter/admin rules; tag Sprint 2 spec changes.
 2. Supply the incremental Sprint 2 requirements plus the unchanged baseline, rather than requesting a full rewrite.
 3. Require new tests first; preserve existing test suite and generated history.
 4. Repeat all Sprint 1 and Sprint 2 acceptance and deployment checks.
@@ -44,6 +44,9 @@ Measure whether Hanzo can generate and incrementally maintain the application fr
 
 ## Success and failure
 Success target for each sprint: 100% of required independent acceptance scenarios passing, zero unresolved critical security failures, zero regressions at sprint completion, zero human-written application patches, and no Hanzo/AI runtime dependency. A failed target is a measured POC outcome, not a reason to alter independent tests to obtain a pass.
+
+## Independent QA interpretation
+Independent black-box tests may be authored by QA or another reviewer; the key requirement is independent ownership and protection from edits by the implementation agent. Freeze the harness and expected results before execution, and preserve negative/edge cases that are not disclosed as implementation examples.
 
 ## Independence safeguards
 The AI may generate its own tests but may not edit the independent suite, change expected outcomes, or suppress failures. Humans may correct ambiguous requirements with documented revisions. Record any unavoidable manual environmental setup separately from manual code changes. Preserve failures and failed iterations, not only the final successful run.
