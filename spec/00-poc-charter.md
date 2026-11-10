@@ -1,5 +1,5 @@
 # Email Trap POC — Charter
-Version: 0.3 (review draft) | Status: Proposed | Scope: Sprints 1–2
+Version: 0.4 (review draft) | Status: Proposed | Scope: Sprints 1–2
 
 ## Hypothesis
 Can Hanzo build, test, deploy, and incrementally maintain a full-stack application from human-readable requirements as the authoritative source of truth, with zero Hanzo/AI runtime dependencies and no human-authored application patches?
@@ -24,7 +24,7 @@ The product is a multi-user SMTP capture server with a private browser inbox. Sp
 Capture: requirements coverage, independently verified pass/fail, security failures, regression count, manual implementation edits (target 0), human interventions, elapsed time, AI model/API usage cost, deployment repeatability, and runtime dependency audit. These are goals, not guaranteed outcomes.
 
 ## Scope exclusions
-No outbound delivery, manual routing of dead-letter messages, inline attachment previews (candidate Sprint 3), self-service account creation, enterprise SSO provisioning, nested managerial visibility, message search, production mail-server hardening, or AI features at runtime. Deferred decisions are in the sprint specifications.
+No outbound delivery, manual routing of dead-letter messages, inline attachment previews (candidate Sprint 3), self-service account creation, enterprise SSO provisioning, nested managerial visibility, message search, production mail-server hardening, or AI features at runtime. Approved decisions are in the sprint specifications; operational defaults are in `05`.
 
 ## Artifacts
 `01` shared requirements; `02` Sprint 1; `03` Sprint 2; `04` acceptance scenarios; `05` technical constraints; `06` evaluation protocol. This charter governs the experiment but is not a second source of application requirements.

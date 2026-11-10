@@ -1,12 +1,12 @@
 # Hanzo POC Evaluation Protocol
-Version: 0.3 (review draft) | Authority: experiment procedure and evidence
+Version: 0.4 (review draft) | Authority: experiment procedure and evidence
 
 ## Purpose
 Measure whether Hanzo can generate and incrementally maintain the application from platform-neutral specifications. Do not confuse passing AI-authored tests with independent proof of correctness.
 
 ## Pre-run preparation
 1. Freeze and Git-tag the requirements package for Sprint 1; confirm approved D-01–D-05 and Sprint 1 shared-address/hidden-state rules.
-2. Prepare a separate black-box acceptance harness, fixtures, and security checks; restrict Hanzo from editing it.
+2. Prepare a separate black-box acceptance harness, fixtures, and security checks (including OP-001–OP-012 for the approved operational defaults); restrict Hanzo from editing it.
 3. Record Hanzo beta version, models, configuration, token/cost reporting availability, host/container environment, and time budget.
 4. Create a clean repository and preserve all prompts and generated changes.
 

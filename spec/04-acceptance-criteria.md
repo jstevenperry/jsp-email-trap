@@ -1,5 +1,5 @@
 # Acceptance Criteria and Traceability
-Version: 0.3 (review draft) | Authority: behavioral verification scenarios, **not** requirement definitions
+Version: 0.4 (review draft) | Authority: behavioral verification scenarios, **not** requirement definitions
 
 The source of each requirement is `01`, `02`, or `03`. This document references IDs without restating normative requirements. Scenarios below are a review-draft baseline; before the v1.0 gate, complete automated coverage for every functional requirement, including negative and boundary paths.
 
@@ -67,9 +67,25 @@ The source of each requirement is `01`, `02`, or `03`. This document references 
 | S1-024 | DEP-003 | Given external OIDC client settings and application secrets; when configuration is changed and the application restarted; then it uses the new settings without modifying source code. |
 | S1-025 | SYS-010 | Given the Sprint 1 test report; when it is reviewed; then each applicable functional requirement has traceable acceptance evidence and access-control denials have negative cases. |
 
+## v0.4 operational-default acceptance scenarios
+| Scenario | Requirement / constraint IDs | Given / When / Then |
+|---|---|---|
+| OP-001 | ARC-012, SMTP-003 | Given a connected SMTP client; when it sends `EHLO`; then `SIZE` and `8BITMIME` are advertised, unsupported extensions are not promised, and accepted 8-bit MIME octets are preserved. |
+| OP-002 | ARC-013, SMTP-002 | Given one assigned and one unassigned syntactically valid recipient; when each is submitted via `RCPT TO`; then both receive equivalent `250` acceptance without revealing assignment status. |
+| OP-003 | ARC-013, DATA-001 | Given a successful transaction; when `DATA` completes and the server returns final `250`; then the complete message and envelope associations have been durably committed. |
+| OP-004 | ARC-013, SMTP-006 | Given oversized data, malformed syntax, unknown commands, invalid sequencing, transient storage failure, or capacity exhaustion; when the relevant condition occurs; then the documented SMTP error class is returned where feasible and no partial message is committed. |
+| OP-005 | ARC-014, SMTP-005, SMTP-006 | Given configured connection, idle, recipient, and size limits; when clients hit each limit and one below it; then boundaries are enforced correctly, including 10,485,760-byte message-data measurement excluding dot-stuffing. |
+| OP-006 | ARC-015, AUTH-006 | Given an authenticated session; when 30 minutes pass without activity or eight hours pass regardless of activity; then protected requests require reauthentication; activity extends only idle lifetime. |
+| OP-007 | ARC-015, AUTH-006 | Given a valid session; when the user logs out; then its server-side state and cookie are invalidated, a replayed cookie is rejected, and login is offered. |
+| OP-008 | ARC-016, SYS-006, DATA-001 | Given a populated SQLite database; when a documented consistent backup is restored; then captured MIME and envelope associations are recoverable. |
+| OP-009 | ARC-017, UI-006 | Given stored messages and a per-user hide; when time passes and the app restarts; then messages remain stored and hiding does not purge data. |
+| OP-010 | ARC-018, AUTH-003, SMTP-002 | Given addresses differing only by domain case, local-part case, plus tags, or non-ASCII characters; when recipients are accepted or compared; then ASCII/domain rules are applied without implicit aliasing or SMTPUTF8. |
+| OP-011 | ARC-019, DEP-004 | Given reference local and remote deployment configurations; when interfaces and URLs are inspected; then SMTP and Keycloak admin are not publicly exposed, loopback HTTP is local-only, and remote web/OIDC callbacks use HTTPS. |
+| OP-012 | ARC-020, DEP-003 | Given changed ports, limits, session settings, and OIDC configuration; when the application restarts with deployment settings; then changes take effect without editing source. |
+
 ## Coverage completion checklist
 - Expand positive, boundary, and negative cases for **every** requirement ID in `01`–`03`.
-- Include SMTP protocol behavior, concurrency, persistence, OIDC state/nonce/PKCE, access by direct ID, and shared-recipient deletion semantics.
+- Include SMTP protocol behavior, concurrency, persistence, OIDC state/nonce/PKCE, access by direct ID, shared-recipient hide semantics, SMTP response codes/limits, session expiry, backup restoration, and network binding checks.
 - D-01–D-08 and the v0.3 shared-address, persistent-hide, overlapping-entitlement, and dead-letter decisions are approved; expand all applicable tests before freezing the Sprint 1/Sprint 2 baselines.
 - Keep an independently owned black-box suite outside the agent's write permissions; record code-generated test coverage separately.
 

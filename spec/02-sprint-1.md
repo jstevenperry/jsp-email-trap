@@ -1,5 +1,5 @@
 # Sprint 1 — Functional Requirements
-Version: 0.3 (review draft) | Authority: Sprint 1 requirements only
+Version: 0.4 (review draft) | Authority: Sprint 1 requirements only
 
 ## Outcome
 A working multi-user email trap with SMTP capture, OIDC login, private browser inboxes, and portable Compose deployment. Shared requirements in `01-system-requirements.md` also apply.
@@ -12,7 +12,7 @@ A working multi-user email trap with SMTP capture, OIDC login, private browser i
 | SMTP-003 | Preserve the accepted raw MIME message, including headers, multipart bodies, and attachments. |
 | SMTP-004 | Do not offer or perform outbound SMTP relay. See SYS-001. |
 | SMTP-005 | Support multiple SMTP envelope recipients for one message. |
-| SMTP-006 | Reject messages larger than a configurable maximum, default 10 MiB, without partially committing them. |
+| SMTP-006 | Reject messages larger than a configurable maximum, default 10 MiB (10,485,760 bytes of SMTP message data excluding dot-stuffing), without partially committing them; see ARC-014. |
 
 ### Data
 | ID | Requirement |
@@ -55,7 +55,7 @@ A working multi-user email trap with SMTP capture, OIDC login, private browser i
 - **D-02:** Accept and persist mail for unassigned SMTP envelope recipients. It becomes visible upon subsequent assignment (D-08).
 - **D-03:** Hide is principal-specific; it does not delete the stored message or hide it for other principals.
 - **D-04:** ASCII email addresses only; compare domain case-insensitively and local part case-sensitively; no implicit alias normalization.
-- **D-05:** SMTP binds to a trusted/private network only. No SMTP authentication or TLS is required for Sprint 1; do not expose it to the public internet.
+- **D-05:** SMTP binds to a trusted/private network only. No SMTP authentication or TLS is required for Sprint 1; do not expose it to the public internet (ARC-019).
 - **D-08:** Entitlement uses **current** address assignment. Assigning an address grants visibility to previously captured messages for that address; removing it revokes visibility, including historical messages. Reassignment grants the new assignee historical access.
 
 ## Additional approved clarifications
