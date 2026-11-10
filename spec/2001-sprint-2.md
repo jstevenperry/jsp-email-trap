@@ -1,5 +1,5 @@
 # Sprint 2 — Organizational Authorization Requirements
-Version: 0.5 (review draft) | Authority: Sprint 2 requirements only
+Version: 1.0 (frozen baseline) | Authority: Sprint 2 requirements only
 
 ## Outcome
 Extend the Sprint 1 application to allow managers to see messages addressed to direct reports and administrators to inspect mail for currently unassigned recipients. All shared and Sprint 1 requirements continue to apply unless a change is explicitly recorded.

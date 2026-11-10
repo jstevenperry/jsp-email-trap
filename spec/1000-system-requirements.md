@@ -1,5 +1,5 @@
 # Shared System Requirements
-Version: 0.5 (review draft) | Authority: shared cross-sprint requirements only
+Version: 1.0 (frozen baseline) | Authority: shared cross-sprint requirements only
 
 Each ID below is defined **only here**. Sprint documents and acceptance tests reference these IDs.
 

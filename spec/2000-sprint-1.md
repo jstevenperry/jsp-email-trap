@@ -1,5 +1,5 @@
 # Sprint 1 — Functional Requirements
-Version: 0.5 (review draft) | Authority: Sprint 1 requirements only
+Version: 1.0 (frozen baseline) | Authority: Sprint 1 requirements only
 
 ## Outcome
 A working multi-user email trap with SMTP capture, OIDC login, private browser inboxes, and portable Compose deployment. Shared requirements in `1000-system-requirements.md` also apply.
@@ -50,5 +50,5 @@ A working multi-user email trap with SMTP capture, OIDC login, private browser i
 | DEP-003 | Configure SMTP/HTTP ports, trusted OIDC issuer/client settings, and application secrets without editing application source. |
 | DEP-004 | Support deployment on a remote Linux host using standard container tooling, without proprietary runtime software. |
 
-## Before v1.0
-Complete independent acceptance-test coverage and verify the approved SMTP, OIDC, and deployment constraints in `5000` and `4000`.
+## Execution readiness
+Independent acceptance-test automation and implementation verification are required before the relevant sprint run. They do not reopen the frozen requirements baseline.

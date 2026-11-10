@@ -1,7 +1,7 @@
 # Acceptance Criteria and Traceability
-Version: 0.5 (review draft) | Authority: behavioral verification scenarios, **not** requirement definitions
+Version: 1.0 (frozen baseline) | Authority: behavioral verification scenarios, **not** requirement definitions
 
-The source of each requirement is `1000`, `2000`, `2001`, or `2002`. This document references IDs without restating normative requirements. Scenarios below are a review-draft baseline; before the v1.0 gate, complete automated coverage for every functional requirement, including negative and boundary paths.
+The source of each requirement is `1000`, `2000`, `2001`, or `2002`. This document references IDs without restating normative requirements. The scenarios below form the frozen acceptance specification. Before running each sprint, QA must implement and independently control executable coverage for every applicable requirement, including negative and boundary paths. Unimplemented tests are not represented as passing.
 
 ## Sprint 1 scenarios
 | Scenario | Requirement IDs | Given / When / Then |
@@ -69,7 +69,7 @@ The source of each requirement is `1000`, `2000`, `2001`, or `2002`. This docume
 | S1-024 | DEP-003 | Given external OIDC client settings and application secrets; when configuration is changed and the application restarted; then it uses the new settings without modifying source code. |
 | S1-025 | SYS-010 | Given the Sprint 1 test report; when it is reviewed; then each applicable functional requirement has traceable acceptance evidence and access-control denials have negative cases. |
 
-## v0.4 operational-default acceptance scenarios
+## Operational-default acceptance scenarios
 | Scenario | Requirement / constraint IDs | Given / When / Then |
 |---|---|---|
 | OP-001 | ARC-012, SMTP-003 | Given a connected SMTP client; when it sends `EHLO`; then `SIZE` and `8BITMIME` are advertised, unsupported extensions are not promised, and accepted 8-bit MIME octets are preserved. |
@@ -100,10 +100,10 @@ The source of each requirement is `1000`, `2000`, `2001`, or `2002`. This docume
 | S3-010 | PREV-001, PREV-003, PREV-005 | Given a message with no attachments; when it is opened; then no Preview control appears; given attachments, Preview has a visible result or explicit fallback. |
 | S3-011 | SYS-009 | Given Sprint 3 is deployed; when the frozen Sprint 1 and Sprint 2 independent suites run; then all previously accepted scenarios still pass. |
 
-## Coverage completion checklist
+## QA execution-readiness checklist
 - Expand positive, boundary, and negative cases for **every** requirement ID in `1000`–`2001` and `2002`.
 - Include SMTP protocol behavior, concurrency, persistence, OIDC state/nonce/PKCE, access by direct ID, shared-recipient hide semantics, SMTP response codes/limits, session expiry, backup restoration, and network binding checks.
-- Complete independent test coverage for the requirements in `1000`, `2000`, `2001`, and `2002` before freezing v1.0.
+- Complete and freeze the independent executable test suite for each sprint before that sprint begins. The v1.0 requirements baseline is already frozen.
 - Keep an independently owned black-box suite outside the agent's write permissions; record code-generated test coverage separately.
 
 ## Traceability convention

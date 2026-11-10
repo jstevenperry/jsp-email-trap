@@ -1,11 +1,11 @@
 # Hanzo POC Evaluation Protocol
-Version: 0.5 (review draft) | Authority: experiment procedure and evidence
+Version: 1.0 (frozen baseline) | Authority: experiment procedure and evidence
 
 ## Purpose
 Measure whether Hanzo can generate and incrementally maintain the application from platform-neutral specifications. Do not confuse passing AI-authored tests with independent proof of correctness.
 
 ## Pre-run preparation
-1. Freeze and Git-tag the Sprint 1 specification baseline (`1000`, `2000`, `4000`, and `5000` as applicable); verify requirement IDs and acceptance coverage are consistent.
+1. Commit and Git-tag the approved v1.0 requirements package. For Sprint 1, select applicable requirements from `1000`, `2000`, `4000`, and `5000`; verify traceability and independent executable test coverage before starting implementation.
 2. Prepare a separate black-box acceptance harness, fixtures, and security checks (including OP-001–OP-012 for the approved operational defaults); restrict Hanzo from editing it.
 3. Record Hanzo beta version, models, configuration, token/cost reporting availability, host/container environment, and time budget.
 4. Create a clean repository and preserve all prompts and generated changes.
@@ -26,16 +26,16 @@ Measure whether Hanzo can generate and incrementally maintain the application fr
 5. Compare deltas, regressions, effort, and independent results; tag Sprint 2 outcome.
 
 ## Sprint 3 protocol
-1. Freeze the successfully evaluated Sprint 2 implementation and tag the Sprint 3 specification baseline, including `2002-sprint-3.md`.
+1. Tag the evaluated Sprint 2 implementation and independently controlled test baseline. Use the already frozen `2002-sprint-3.md` requirements for the Sprint 3 increment.
 2. Supply the incremental Sprint 3 requirements and unchanged Sprint 1–2 baselines; do not ask the agent to rebuild the application from scratch.
 3. Require traceable preview tests before implementing the preview feature; preserve prior test suites and generated history.
 4. Run the independent Sprint 3 scenarios, all frozen Sprint 1 and Sprint 2 scenarios, and preview-specific security checks.
 5. Record new failures, regressions, human interventions, deployment results, and AI usage; tag the Sprint 3 outcome.
 
 ## Status terminology
-- **Review draft:** Requirements are documented for review but have not yet been frozen for execution.
+- **Frozen requirements baseline:** Version 1.0 is the approved, immutable behavioral and technical specification for all three sprints. Any subsequent change requires a new version and documented impact assessment.
 - **Verification task:** Work for QA/engineering to demonstrate that the implementation meets the approved specifications; not an unresolved business decision.
-- **Frozen baseline:** The version-controlled specification and independent test suite used for a particular sprint execution.
+- **Sprint execution baseline:** The frozen v1.0 specification plus the independently controlled, executable tests applicable to that sprint; record exact Git commit/tag and test-suite revision.
 
 ## Evidence ledger (one row per run)
 | Field | Record |

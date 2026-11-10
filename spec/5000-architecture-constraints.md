@@ -1,5 +1,5 @@
 # Architecture and Operational Constraints
-Version: 0.5 (review draft) | Authority: technical constraints, not business rules
+Version: 1.0 (frozen baseline) | Authority: technical constraints, not business rules
 
 These are technical boundaries for generated implementation. Business behavior is defined only in `1000`–`2001`.
 
@@ -26,7 +26,7 @@ These are technical boundaries for generated implementation. Business behavior i
 ## Engineering boundaries
 Use standard SMTP/MIME libraries rather than writing protocol parsers from scratch. Handle malformed MIME defensively; do not execute attachments. Use migrations or explicit schema versioning between sprints. Prefer deterministic test fixtures and disposable test databases. Preserve original SMTP envelope recipient metadata even when MIME headers differ.
 
-## Approved v0.4 operational defaults
+## Approved operational defaults
 The following are approved, testable technical constraints. Functional behavior remains authoritative in `1000`–`2001`.
 
 | ID | Constraint |
@@ -52,4 +52,4 @@ The following are approved, testable technical constraints. Functional behavior 
 A final SMTP `250` after message `DATA` acknowledges durable capture by the trap, **not** delivery to a mailbox or external recipient. Session and message limits apply to SMTP submission independently of whether a recipient is assigned. For `8BITMIME`, preserve accepted octets in stored raw MIME. A 100-recipient limit counts accepted envelope recipient commands within one transaction. A connection rejected at capacity may receive `421` if the server can respond before closing.
 
 ## Remaining pre-v1.0 review
-**Approved policy is complete for this review draft.** Before the v1.0 execution gate, finish independent test coverage for every Sprint 1–3 requirement and operational constraint, validate actual SMTP extension advertisement and error behavior with the chosen library, verify preview isolation, and test the reference Compose network bindings. These are verification tasks, not decisions awaiting business approval.
+**The approved technical policy is frozen in v1.0.** Before each applicable sprint execution, complete independent test coverage, validate SMTP extension advertisement and error behavior, verify preview isolation, and test reference Compose network bindings. These are QA and engineering verification tasks, not outstanding business decisions.

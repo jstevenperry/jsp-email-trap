@@ -1,5 +1,5 @@
 # Sprint 3 — Inline Attachment Preview Requirements
-Version: 0.5 (review draft) | Authority: Sprint 3 behavioral requirements only
+Version: 1.0 (frozen baseline) | Authority: Sprint 3 behavioral requirements only
 
 ## Outcome
 Extend the existing message-detail experience with safe, authorized inline previews of common attachment types. Sprint 1 attachment downloads and Sprint 2 organizational/dead-letter authorization remain unchanged. This sprint adds previews, not a new attachment storage or delivery system.

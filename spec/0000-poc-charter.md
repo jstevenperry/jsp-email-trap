@@ -1,5 +1,5 @@
 # Email Trap POC — Charter
-Version: 0.5 (review draft) | Status: Approved scope; review draft | Scope: Sprints 1–3
+Version: 1.0 (frozen requirements baseline) | Status: Approved and frozen | Scope: Sprints 1–3
 
 ## Hypothesis
 Can Hanzo build, test, deploy, and incrementally maintain a full-stack application from human-readable requirements as the authoritative source of truth, with zero Hanzo/AI runtime dependencies and no human-authored application patches?
