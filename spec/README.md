@@ -1,28 +1,47 @@
 # Email Trap POC — Specification Index
 
-**Draft v0.4 (review draft).** Read `00-poc-charter.md` first. Authoritative behavioral requirements live **only** in `01-system-requirements.md`, `02-sprint-1.md`, and `03-sprint-2.md`. `04` contains test scenarios referencing IDs; `05` contains technical constraints; `06` governs the POC evaluation. Prior v0.1 and v0.2 packages are preserved separately.
+**v0.5 — review draft; not yet the frozen v1.0 implementation baseline.** Agreed behavior is codified directly in the numbered requirements. This review checks clarity and acceptance coverage before the execution baseline is frozen.
 
-## Scope by sprint
-- **Sprint 1:** SMTP capture (including unknown recipients), current-assignment inbox access, shared addresses, persistent per-principal hiding, OIDC, visible attachment/raw-MIME downloads, portable deployment.
-- **Sprint 2:** Direct-report read-only visibility, overlapping own-recipient hide entitlement, administrator-only dynamic dead-letter inspection, independent regression verification.
-- **Candidate Sprint 3 (not specified yet):** Inline previews for supported attachment types; unsupported types remain download-only.
+## Where requirements live
+- `0000-poc-charter.md`: experiment goals, sprint boundaries, and success criteria.
+- `1000-system-requirements.md`: shared cross-sprint behavioral requirements.
+- `2000-sprint-1.md`: Sprint 1 behavioral requirements, including capture, OIDC, inbox, and attachment downloads.
+- `2001-sprint-2.md`: Sprint 2 behavioral requirements, including manager access and admin dead-letter inspection.
+- `2002-sprint-3.md`: **new** Sprint 3 behavioral requirements for inline attachment previews.
+- `4000-acceptance-criteria.md`: test scenarios and traceability, not alternative requirement definitions.
+- `5000-architecture-constraints.md`: approved technical and operational implementation constraints.
+- `6000-evaluation-protocol.md`: execution, independent QA, regression, and evidence protocol.
 
-## v0.3 change log (carried forward)
-1. Approved concurrent address assignment to multiple principals.
-2. Approved persistent hidden-message state across loss and restoration of an address assignment.
-3. Clarified direct-recipient hide entitlement for managers who also have read-only subordinate access.
-4. Added Sprint 2 administrator-only dead-letter inspection for currently unassigned SMTP envelope recipients, including mixed-recipient messages, automatic reclassification, historical visibility, and no manual delivery.
-5. Made Sprint 1 visible per-attachment and raw-MIME Download actions explicit.
-6. Added corresponding acceptance scenarios and clarified independent QA test ownership.
-7. Preserved D-01–D-08, including D-08 historical visibility under current assignments.
+Each normative behavioral requirement has one authoritative home (`1000`, `2000`, `2001`, or `2002`); other files reference its ID. Technical constraints are defined in `5000`.
 
-## v0.4 change log
-1. Approved SMTP extension baseline (`EHLO`, `SIZE`, `8BITMIME`) and standard success/failure response codes, including uniform acceptance of unassigned recipients.
-2. Approved SMTP connection, inactivity, recipient-count, and 10 MiB message-data limits, with configurable values.
-3. Approved eight-hour absolute and 30-minute idle web sessions; local logout invalidates the server-side session.
-4. Approved consistent SQLite manual backup/restore and indefinite POC retention.
-5. Reaffirmed ASCII-only address comparison and private SMTP / HTTPS remote browser exposure policy.
-6. Added operational acceptance scenarios OP-001–OP-012 referencing the approved architecture constraints ARC-012–ARC-020.
+## Approved sprint scope
+- **Sprint 1:** SMTP capture, unknown-recipient storage, OIDC, address-based inboxes, shared addresses, persistent per-principal hiding, visible attachment and MIME downloads, portable deployment.
+- **Sprint 2:** Read-only direct-report manager access, own-recipient hide entitlement, administrator-only dynamic dead-letter inspection, historical visibility under current address assignments.
+- **Sprint 3:** Inline PDF, PNG, JPEG, GIF, WebP, and plain-text previews; exact unsupported/unrenderable fallback message; secure preview authorization; downloads retained.
 
-## Remaining pre-v1.0 work
-Complete independent acceptance coverage for every requirement and validate the operational defaults against the chosen libraries and deployment environment. This remains a review draft, not a frozen implementation baseline.
+## v0.5 change log
+1. Promoted attachment preview from a candidate idea to a defined Sprint 3 with six new PREV requirements.
+2. Added 11 Sprint 3 acceptance scenarios, including unsupported and malformed formats, access-control attacks, and full Sprint 1–2 regression.
+3. Added three preview security/implementation constraints (ARC-021–ARC-023).
+4. Updated charter, acceptance coverage, and evaluation protocol for three sprints.
+5. Consolidated agreed behavior into numbered requirements; removed redundant decision identifiers and decision summaries. Clarified review drafts, verification tasks, and frozen baselines.
+
+## Remaining work before v1.0
+Complete independent acceptance-test coverage for every requirement and verify the chosen SMTP libraries, deployment bindings, and preview isolation. These are **test/engineering completion tasks**, not unresolved business-policy decisions.
+
+Earlier v0.1–v0.4 archives are preserved separately.
+
+## Document numbering convention
+
+Four-digit prefixes group documents by purpose and provide stable, sortable names in file stores such as SharePoint:
+
+| Range | Purpose |
+|---|---|
+| `0000`–`0999` | Introduction, charter, and project guidance |
+| `1000`–`1999` | Shared system requirements |
+| `2000`–`3999` | Sprint specifications (`2000` = Sprint 1, `2001` = Sprint 2, `2002` = Sprint 3) |
+| `4000`–`4999` | Acceptance criteria and verification specifications |
+| `5000`–`5999` | Architecture and operational constraints |
+| `6000`–`6999` | Evaluation protocols and evidence guidance |
+
+The `2000`–`3999` range has 2,000 available document numbers, sufficient for up to 2,000 sprint specification files when using one number per sprint. Prefixes categorize documents; version control remains separate from the filename.
