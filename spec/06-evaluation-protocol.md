@@ -1,5 +1,5 @@
 # Hanzo POC Evaluation Protocol
-Version: 0.1 (draft) | Authority: experiment procedure and evidence
+Version: 0.2 (review draft) | Authority: experiment procedure and evidence
 
 ## Purpose
 Measure whether Hanzo can generate and incrementally maintain the application from platform-neutral specifications. Do not confuse passing AI-authored tests with independent proof of correctness.

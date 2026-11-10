@@ -1,5 +1,5 @@
 # Architecture and Operational Constraints
-Version: 0.1 (draft) | Authority: technical constraints, not business rules
+Version: 0.2 (review draft) | Authority: technical constraints, not business rules
 
 These are technical boundaries for generated implementation. Business behavior is defined only in `01`–`03`.
 

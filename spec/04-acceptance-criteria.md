@@ -1,5 +1,5 @@
 # Acceptance Criteria and Traceability
-Version: 0.1 (draft) | Authority: behavioral verification scenarios, **not** requirement definitions
+Version: 0.2 (review draft) | Authority: behavioral verification scenarios, **not** requirement definitions
 
 The source of each requirement is `01`, `02`, or `03`. This document references IDs without restating normative requirements. Scenarios below are illustrative baseline cases; before the v1.0 gate, generate complete automated coverage for every functional requirement, including negative paths and unresolved decisions.
 
@@ -14,7 +14,7 @@ The source of each requirement is `01`, `02`, or `03`. This document references 
 | S1-006 | SMTP-006 | Given a message exceeds the configured size; when submitted via SMTP; then SMTP rejects it and no partial message is visible or stored. |
 | S1-007 | SMTP-003, DATA-002, UI-003, UI-004, UI-005 | Given an email with plain text, HTML, and an attachment; when an authorized user opens it; then content is inspectable and MIME/attachment downloads preserve bytes; unsafe HTML does not execute. |
 | S1-008 | AUTH-006 | Given no session or an invalid/expired credential; when protected endpoints are requested; then access is denied. |
-| S1-009 | UI-006, DATA-003 | Given a shared message for Alice and Bob; when Alice hides it; then Bob retains visibility and the underlying message remains stored. **Pending D-03.** |
+| S1-009 | UI-006, DATA-003 | Given a shared message for Alice and Bob; when Alice hides it; then Bob retains visibility and the underlying message remains stored. **D-03 approved.** |
 | S1-010 | SYS-001, SMTP-004 | Given SMTP mail is accepted; when processing completes; then no external SMTP delivery attempt occurs. |
 | S1-011 | SYS-002 | Given MIME `To` says Alice but SMTP envelope recipient is Bob; when accepted; then entitlement follows Bob, not Alice. |
 | S1-012 | AUTH-002, AUTH-003 | Given two identity providers issue the same `sub`, or a user changes their email claim; when logging in; then identity is resolved by `(iss,sub)` and does not automatically grant another mailbox. |
@@ -30,10 +30,22 @@ The source of each requirement is `01`, `02`, or `03`. This document references 
 | S2-006 | ORG-002, ORG-006 | Given seed data assigns Bob two direct managers; when configuration is validated; then the invalid relationship is rejected. |
 | S2-007 | ORG-009, SYS-009 | Given Sprint 2 changes are deployed; when the frozen Sprint 1 suite runs; then every previously accepted scenario still passes. |
 
+## Additional scenarios for approved decisions
+| Scenario | Requirement IDs | Given / When / Then |
+|---|---|---|
+| S1-013 | SMTP-002, AUTH-003, AUTH-004 | Given mail for an unassigned address was captured yesterday; when that address is assigned to Alice today; then Alice can view yesterday's message without redelivery. |
+| S1-014 | AUTH-003, AUTH-004, AUTH-005 | Given Alice currently owns an address and can see its historical messages; when the assignment is removed; then Alice cannot access those messages by list, ID, or download. |
+| S1-015 | AUTH-003, AUTH-004, AUTH-005 | Given an address previously assigned to Alice is reassigned to Bob; when Bob logs in; then Bob can access all previously captured messages for that address and Alice cannot access them solely through the old assignment. |
+| S1-016 | UI-006 | Given Alice hid a message and Bob can also see it; when Bob views his inbox; then the message is visible to Bob and hidden from Alice. |
+| S2-008 | ORG-003, ORG-007 | Given Bob received a message before Alice became his manager; when Alice becomes Bob's direct manager; then Alice can view that earlier message. |
+| S2-009 | ORG-007, ORG-008 | Given Alice previously managed Bob; when the relationship is removed; then Alice loses all access granted solely through Bob, including access to historical attachments and raw MIME. |
+| S2-010 | ORG-003, ORG-008 | Given Alice is authorized only as Bob's manager; when Alice attempts to hide Bob's message; then the mutation is denied and Bob's visibility is unchanged. |
+| S2-011 | ORG-002 | Given self-management or a cycle in the relationship seed; when configuration is validated; then it is rejected. |
+
 ## Coverage completion checklist
 - Expand positive, boundary, and negative cases for **every** requirement ID in `01`–`03`.
 - Include SMTP protocol behavior, concurrency, persistence, OIDC state/nonce/PKCE, access by direct ID, and shared-recipient deletion semantics.
-- Resolve D-01–D-08 and amend tests before freezing the Sprint 1/Sprint 2 baselines.
+- D-01–D-08 are approved; expand all applicable tests before freezing the Sprint 1/Sprint 2 baselines.
 - Keep an independently owned black-box suite outside the agent's write permissions; record code-generated test coverage separately.
 
 ## Traceability convention
